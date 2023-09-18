@@ -1,12 +1,11 @@
-import {
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-  Product,
-  ProductState,
-} from './product.types';
+import { Product } from './product.types';
+
+interface ProductState {
+  products: Product[];
+  currentProduct: Product | null;
+}
 
 const initialState: ProductState = {
   products: [],

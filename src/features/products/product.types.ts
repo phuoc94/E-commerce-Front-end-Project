@@ -10,8 +10,3 @@ export interface Product {
   };
   images: string[];
 }
-
-export interface ProductState {
-  products: Product[];
-  currentProduct: Product | null;
-}
