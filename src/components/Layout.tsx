@@ -1,22 +1,30 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Outlet } from 'react-router-dom';
 
+import { Box, Container, Typography } from '@mui/material';
+
+import NavBar from './NavBar';
+
 const Layout: React.FC = () => {
   return (
-    <div>
-      <header>
-        <h1>This is the header</h1>
-      </header>
+    <Fragment>
+      <NavBar />
 
-      <main>
-        <Outlet />
-      </main>
+      <Box component="main">
+        <Container>
+          <Outlet />
+        </Container>
+      </Box>
 
-      <footer>
-        <h1>This is the footer</h1>
-      </footer>
-    </div>
+      <Box component="footer">
+        <Container>
+          <Typography variant="h2" component="h1">
+            This is the footer
+          </Typography>
+        </Container>
+      </Box>
+    </Fragment>
   );
 };
 

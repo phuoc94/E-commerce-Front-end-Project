@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import { Box } from '@mui/material';
+
 import { fetchAllProductAsync } from '../features/products/product.slice';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
@@ -13,14 +15,14 @@ const HomePage = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <Box>
       {products &&
         products.map((p) => (
           <div key={p.id}>
             {p.title} {p.price}
           </div>
         ))}
-    </div>
+    </Box>
   );
 };
 
