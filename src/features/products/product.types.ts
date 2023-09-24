@@ -1,8 +1,4 @@
-interface Category {
-  id: number;
-  name: string;
-  image: string;
-}
+import { Category } from '../category/category.types';
 
 export interface Product {
   id: number;
