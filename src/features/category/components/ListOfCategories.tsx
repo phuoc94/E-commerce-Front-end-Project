@@ -28,10 +28,10 @@ const ListOfCategories = () => {
       </Typography>
       <Grid container spacing={2}>
         {categories &&
-          categories.map((p) => (
-            <Grid item xs={6} sm={4} md={3} key={p.id}>
-              <Link to={`category/${p.name}`}>
-                <CategoryCard title={p.name} image={p.image} />
+          categories.map((category) => (
+            <Grid item xs={6} sm={4} md={3} key={category.id}>
+              <Link to={`category/${category.name}`}>
+                <CategoryCard title={category.name} image={category.image} />
               </Link>
             </Grid>
           ))}
