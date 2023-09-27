@@ -1,8 +1,8 @@
-import React, { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { Grid, Typography } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { useAppSelector } from '../../../hooks/useAppSelector';
@@ -18,7 +18,7 @@ const ListOfCategories = () => {
   }, [dispatch]);
 
   return (
-    <Fragment>
+    <Container>
       <Typography
         variant="h2"
         sx={{ paddingTop: '2rem', paddingBottom: '1rem' }}
@@ -36,7 +36,7 @@ const ListOfCategories = () => {
             </Grid>
           ))}
       </Grid>
-    </Fragment>
+    </Container>
   );
 };
 

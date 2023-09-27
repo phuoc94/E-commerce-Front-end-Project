@@ -12,9 +12,7 @@ const Layout: React.FC = () => {
       <NavBar />
 
       <Box component="main">
-        <Container>
-          <Outlet />
-        </Container>
+        <Outlet />
       </Box>
 
       <Box component="footer">
