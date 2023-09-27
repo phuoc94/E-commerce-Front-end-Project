@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Container, Grid, Paper, Typography } from '@mui/material';
 
 import ProductCard from '../features/products/components/ProductCard';
-import { fetchAllProductAsync } from '../features/products/product.slice';
+import { fetchProducts } from '../features/products/product.slice';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
 
@@ -12,7 +12,7 @@ const ProductsPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllProductAsync());
+    dispatch(fetchProducts());
   }, [dispatch]);
 
   return (

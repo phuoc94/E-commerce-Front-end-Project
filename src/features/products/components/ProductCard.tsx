@@ -1,7 +1,10 @@
+import { Link } from 'react-router-dom';
+
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   Button,
   Card,
+  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
@@ -18,17 +21,21 @@ type ProductCardProps = {
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Card>
-      <CardMedia
-        component="img"
-        alt={product.title}
-        height="140"
-        image={product.images[0]}
-        title={product.title}
-      />
-      <CardContent>
-        <Typography variant="body2">{product.title}</Typography>
-        <Typography variant="h6">Price: ${product.price}</Typography>
-      </CardContent>
+      <Link to={`/product/${product.id}`}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            alt={product.title}
+            height="140"
+            image={product.images[0]}
+            title={product.title}
+          />
+          <CardContent>
+            <Typography variant="body2">{product.title}</Typography>
+            <Typography variant="h6">{product.price} €</Typography>
+          </CardContent>
+        </CardActionArea>
+      </Link>
       <CardActions sx={{ justifyContent: 'space-between' }}>
         <IconButton aria-label="Add to Favorites">
           <FavoriteIcon />

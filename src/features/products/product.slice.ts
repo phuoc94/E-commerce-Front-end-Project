@@ -6,17 +6,32 @@ import { Product } from './product.types';
 
 interface ProductState {
   products: Product[];
-  currentProduct: Product | null;
+  product: Product | null;
   error: string | null;
-  loading: boolean;
+  isLoading: boolean;
 }
 
 const initialState: ProductState = {
   products: [],
-  currentProduct: null,
+  product: null,
   error: null,
-  loading: false,
+  isLoading: false,
 };
+
+export const fetchProducts = createAsyncThunk('fetchProducts', async () => {
+  const data = await axios.get('https://api.escuelajs.co/api/v1/products');
+  return data;
+});
+
+export const fetchProduct = createAsyncThunk(
+  'fetchProduct',
+  async (productId: string) => {
+    const data = await axios.get(
+      `https://api.escuelajs.co/api/v1/products/${productId}`,
+    );
+    return data;
+  },
+);
 
 export const productSlice = createSlice({
   name: 'product',
@@ -29,40 +44,43 @@ export const productSlice = createSlice({
       state: ProductState,
       action: PayloadAction<Product | null>,
     ) => {
-      state.currentProduct = action.payload;
+      state.product = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAllProductAsync.fulfilled, (state, action) => {
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
       if (!(action.payload instanceof Error)) {
         state.products = action.payload.data as Product[];
-        state.loading = false;
+        state.isLoading = false;
       }
     });
-    builder.addCase(fetchAllProductAsync.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchAllProductAsync.rejected, (state, action) => {
+    builder.addCase(fetchProducts.rejected, (state, action) => {
       if (action.payload instanceof Error) {
-        state.loading = false;
+        state.isLoading = false;
+        state.error = action.payload.message;
+      }
+    });
+
+    builder.addCase(fetchProduct.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchProduct.fulfilled, (state, action) => {
+      if (!(action.payload instanceof Error)) {
+        state.product = action.payload.data as Product;
+        state.isLoading = false;
+      }
+    });
+    builder.addCase(fetchProduct.rejected, (state, action) => {
+      if (action.payload instanceof Error) {
+        state.isLoading = false;
         state.error = action.payload.message;
       }
     });
   },
 });
-
-export const fetchAllProductAsync = createAsyncThunk(
-  'fetchAllProductAsync',
-  async () => {
-    try {
-      const data = await axios.get('https://api.escuelajs.co/api/v1/products');
-      return data;
-    } catch (e) {
-      const error = e as Error;
-      return error;
-    }
-  },
-);
 
 export const { setProducts, setCurrentProduct } = productSlice.actions;
 export default productSlice.reducer;
