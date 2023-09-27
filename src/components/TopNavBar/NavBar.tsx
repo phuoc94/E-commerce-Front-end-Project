@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { AccountCircle, ShoppingCart } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -45,9 +47,8 @@ const NavBar = () => {
             <Grid item>
               <Typography
                 variant="h6"
-                noWrap
-                component="a"
-                href="/"
+                to="/"
+                component={Link}
                 sx={{
                   mr: 2,
                   fontFamily: 'monospace',
@@ -62,7 +63,9 @@ const NavBar = () => {
             </Grid>
             <Grid item order={{ md: 3 }}>
               <Stack direction="row" spacing={2}>
-                <AccountCircle />
+                <Link to="profile">
+                  <AccountCircle />
+                </Link>
                 <ShoppingCart />
               </Stack>
             </Grid>
