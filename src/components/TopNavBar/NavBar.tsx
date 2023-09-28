@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { AccountCircle, ShoppingCart } from '@mui/icons-material';
+import { ShoppingCart } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 
+import AccountPopover from './AccountPopover';
 import SearchBox from './SearchBox';
 
 const NavBar = () => {
@@ -63,10 +64,10 @@ const NavBar = () => {
             </Grid>
             <Grid item order={{ md: 3 }}>
               <Stack direction="row" spacing={2}>
-                <Link to="profile">
-                  <AccountCircle />
-                </Link>
-                <ShoppingCart />
+                <AccountPopover />
+                <IconButton>
+                  <ShoppingCart />
+                </IconButton>
               </Stack>
             </Grid>
             <Grid item xs={12} md={8} order={{ md: 2 }}>

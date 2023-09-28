@@ -18,9 +18,14 @@ import {
   Typography,
 } from '@mui/material';
 
-import { getProfile, login } from '../features/auth/auth.actions';
+import {
+  fetchRefreshToken,
+  getProfile,
+  login,
+} from '../features/auth/auth.actions';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
+import { cookies } from '../utils/cookies';
 
 const SignIn: React.FC = () => {
   const [showError, setShowError] = useState(false);
@@ -29,6 +34,8 @@ const SignIn: React.FC = () => {
     (state) => state.auth,
   );
 
+  const refreshToken = cookies.get('refreshToken');
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -36,6 +43,12 @@ const SignIn: React.FC = () => {
       setShowError(true);
     }
   }, [error]);
+
+  useEffect(() => {
+    if (refreshToken && !accessToken && !profile) {
+      dispatch(fetchRefreshToken(refreshToken));
+    }
+  }, [dispatch, accessToken, profile, refreshToken]);
 
   useEffect(() => {
     if (accessToken && !profile) {
