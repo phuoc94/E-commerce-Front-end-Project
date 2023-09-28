@@ -1,19 +1,25 @@
+import { useEffect } from 'react';
+
 import { Navigate, Outlet } from 'react-router-dom';
 
+import { fetchRefreshToken } from '../features/auth/auth.actions';
+import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
-
-type Auth = {
-  token: boolean;
-};
+import { cookies } from '../utils/cookies';
 
 const PrivateRoutes: React.FC = () => {
-  const { token } = useAppSelector((state) => state.auth);
+  const { accessToken } = useAppSelector((state) => state.auth);
 
-  const auth: Auth = {
-    token: Boolean(token),
-  };
+  const dispatch = useAppDispatch();
 
-  return auth.token ? <Outlet /> : <Navigate to="/signin" />;
+  useEffect(() => {
+    const refreshToken = cookies.get('refreshToken');
+    if (refreshToken) {
+      dispatch(fetchRefreshToken(refreshToken));
+    }
+  }, [dispatch]);
+
+  return accessToken ? <Outlet /> : <Navigate to="/signin" />;
 };
 
 export default PrivateRoutes;

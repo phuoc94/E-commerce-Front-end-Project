@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { Link, Navigate } from 'react-router-dom';
 
@@ -18,17 +18,30 @@ import {
   Typography,
 } from '@mui/material';
 
-import { getProfile, login } from '../features/auth/auth.slice';
+import { getProfile, login } from '../features/auth/auth.actions';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
 
-const SignIn = () => {
-  const dispatch = useAppDispatch();
+const SignIn: React.FC = () => {
   const [showError, setShowError] = useState(false);
 
-  const { profile, token, isLoading, error } = useAppSelector(
+  const { profile, accessToken, isLoading, error } = useAppSelector(
     (state) => state.auth,
   );
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (error) {
+      setShowError(true);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (accessToken && !profile) {
+      dispatch(getProfile(accessToken));
+    }
+  }, [dispatch, accessToken, profile]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,18 +56,6 @@ const SignIn = () => {
   const handleCloseError = () => {
     setShowError(false);
   };
-
-  useEffect(() => {
-    if (error) {
-      setShowError(true);
-    }
-  }, [error]);
-
-  useEffect(() => {
-    if (token && !profile) {
-      dispatch(getProfile(token));
-    }
-  }, [dispatch, token, profile]);
 
   return (
     <Fragment>
