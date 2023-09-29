@@ -11,7 +11,7 @@ const Layout: React.FC = () => {
     <Fragment>
       <NavBar />
 
-      <Box component="main">
+      <Box component="main" sx={{ backgroundColor: '#dbdcdc' }}>
         <Outlet />
       </Box>
 
