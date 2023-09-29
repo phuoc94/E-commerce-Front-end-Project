@@ -35,8 +35,8 @@ export const login = createAsyncThunk(
   },
 );
 
-export const fetchRefreshToken = createAsyncThunk(
-  'auth/refreshToken',
+export const fetchNewAccessToken = createAsyncThunk(
+  'auth/fetchNewAccessToken',
   async (refreshToken: string) => {
     const body: RefreshTokenBody = {
       refreshToken,

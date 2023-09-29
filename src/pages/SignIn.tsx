@@ -1,13 +1,6 @@
-import {
-  Fragment,
-  useEffect,
-  useState,
-} from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
-import {
-  Link,
-  Navigate,
-} from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
@@ -28,7 +21,7 @@ import {
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
 import {
-  fetchRefreshToken,
+  fetchNewAccessToken,
   getProfile,
   login,
 } from '../store/actions/auth.actions';
@@ -53,7 +46,7 @@ const SignIn: React.FC = () => {
 
   useEffect(() => {
     if (refreshToken && !accessToken && !profile) {
-      dispatch(fetchRefreshToken(refreshToken));
+      dispatch(fetchNewAccessToken(refreshToken));
     }
   }, [dispatch, accessToken, profile, refreshToken]);
 

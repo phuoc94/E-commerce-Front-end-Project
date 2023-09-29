@@ -2,7 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { User } from '../../types/user.types';
 import { removeCookies } from '../../utils/cookies';
-import { fetchRefreshToken, getProfile, login } from '../actions/auth.actions';
+import {
+  fetchNewAccessToken,
+  getProfile,
+  login,
+} from '../actions/auth.actions';
 
 export interface AuthState {
   accessToken: string | null;
@@ -58,15 +62,15 @@ export const authSlice = createSlice({
       });
 
     builder
-      .addCase(fetchRefreshToken.pending, (state) => {
+      .addCase(fetchNewAccessToken.pending, (state) => {
         state.error = null;
         state.isLoading = true;
       })
-      .addCase(fetchRefreshToken.fulfilled, (state, action) => {
+      .addCase(fetchNewAccessToken.fulfilled, (state, action) => {
         state.isLoading = false;
         state.accessToken = action.payload;
       })
-      .addCase(fetchRefreshToken.rejected, (state, action) => {
+      .addCase(fetchNewAccessToken.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

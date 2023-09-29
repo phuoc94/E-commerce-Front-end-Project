@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 
-import {
-  Navigate,
-  Outlet,
-} from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
-import { fetchRefreshToken } from '../store/actions/auth.actions';
+import { fetchNewAccessToken } from '../store/actions/auth.actions';
 import { cookies } from '../utils/cookies';
 
 const PrivateRoutes: React.FC = () => {
@@ -18,7 +15,7 @@ const PrivateRoutes: React.FC = () => {
   useEffect(() => {
     const refreshToken = cookies.get('refreshToken');
     if (refreshToken) {
-      dispatch(fetchRefreshToken(refreshToken));
+      dispatch(fetchNewAccessToken(refreshToken));
     }
   }, [dispatch]);
 

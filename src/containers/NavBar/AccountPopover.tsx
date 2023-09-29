@@ -16,7 +16,7 @@ import {
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import {
-  fetchRefreshToken,
+  fetchNewAccessToken,
   getProfile,
 } from '../../store/actions/auth.actions';
 import { logout } from '../../store/reducers/auth.slice';
@@ -49,7 +49,7 @@ const AccountPopover: React.FC = () => {
 
   useEffect(() => {
     if (refreshToken && !accessToken && !profile) {
-      dispatch(fetchRefreshToken(refreshToken));
+      dispatch(fetchNewAccessToken(refreshToken));
     }
   }, [dispatch, accessToken, profile, refreshToken]);
 
