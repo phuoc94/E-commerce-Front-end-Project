@@ -1,6 +1,9 @@
 import store from '../../store/configureStore';
-import { CategoryState, fetchCategories } from './category.slice';
-import { Category } from './category.types';
+import {
+  CategoryState,
+  fetchCategories,
+} from '../../store/reducers/category.slice';
+import { Category } from '../../types/category.types';
 
 describe('category reducer', () => {
   let initialState: CategoryState;

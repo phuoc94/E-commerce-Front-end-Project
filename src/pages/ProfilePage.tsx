@@ -21,7 +21,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import ListMenuItem from '../components/ListMenuItem';
+import ListMenuItem from '../components/profile/ListMenuItem';
 import { useAppSelector } from '../hooks/useAppSelector';
 
 const ProfilePage = () => {

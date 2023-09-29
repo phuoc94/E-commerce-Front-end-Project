@@ -1,6 +1,13 @@
-import { Fragment, useEffect, useState } from 'react';
+import {
+  Fragment,
+  useEffect,
+  useState,
+} from 'react';
 
-import { Link, Navigate } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+} from 'react-router-dom';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
@@ -18,13 +25,13 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { useAppSelector } from '../hooks/useAppSelector';
 import {
   fetchRefreshToken,
   getProfile,
   login,
-} from '../features/auth/auth.actions';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { useAppSelector } from '../hooks/useAppSelector';
+} from '../store/actions/auth.actions';
 import { cookies } from '../utils/cookies';
 
 const SignIn: React.FC = () => {

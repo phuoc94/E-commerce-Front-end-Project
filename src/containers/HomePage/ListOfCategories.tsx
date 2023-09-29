@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 import { Container, Grid, Typography } from '@mui/material';
 
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
-import { useAppSelector } from '../../../hooks/useAppSelector';
-import { fetchCategories } from '../category.slice';
-import CategoryCard from './CategoryCard';
+import CategoryCard from '../../components/category/CategoryCard';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { fetchCategories } from '../../store/reducers/category.slice';
 
 const ListOfCategories = () => {
   const categories = useAppSelector((state) => state.categories.categories);

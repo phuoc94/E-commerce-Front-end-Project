@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Category } from './category.types';
+import { Category } from '../../types/category.types';
 
 export interface CategoryState {
   categories: Category[];

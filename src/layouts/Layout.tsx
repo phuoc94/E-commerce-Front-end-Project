@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 import { Box, Container, Typography } from '@mui/material';
 
-import NavBar from './TopNavBar/NavBar';
+import NavBar from '../containers/NavBar/NavBar';
 
 const Layout: React.FC = () => {
   return (

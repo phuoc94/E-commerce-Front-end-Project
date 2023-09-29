@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Product } from './product.types';
+import { Product } from '../../types/product.types';
 
 interface ProductState {
   products: Product[];

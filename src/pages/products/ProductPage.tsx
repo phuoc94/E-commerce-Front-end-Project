@@ -14,10 +14,10 @@ import {
   Typography,
 } from '@mui/material';
 
-import ImageDisplay from '../features/products/components/ImageDisplay';
-import { fetchProduct } from '../features/products/product.slice';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { useAppSelector } from '../hooks/useAppSelector';
+import ImageDisplay from '../../components/products/ImageDisplay';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { fetchProduct } from '../../store/reducers/product.slice';
 
 const ProductPage = () => {
   const { productId } = useParams();

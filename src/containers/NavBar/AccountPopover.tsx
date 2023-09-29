@@ -13,13 +13,13 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import {
   fetchRefreshToken,
   getProfile,
-} from '../../features/auth/auth.actions';
-import { logout } from '../../features/auth/auth.slice';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
+} from '../../store/actions/auth.actions';
+import { logout } from '../../store/reducers/auth.slice';
 import { cookies } from '../../utils/cookies';
 
 const OPTIONS = [

@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { User } from '../../types/user.types';
 import { removeCookies } from '../../utils/cookies';
-import { fetchRefreshToken, getProfile, login } from './auth.actions';
-import { User } from './user.types';
+import { fetchRefreshToken, getProfile, login } from '../actions/auth.actions';
 
 export interface AuthState {
   accessToken: string | null;

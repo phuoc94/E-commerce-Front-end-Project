@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 
 import { Container, Grid, Paper, Typography } from '@mui/material';
 
-import ProductCard from '../features/products/components/ProductCard';
-import { fetchProducts } from '../features/products/product.slice';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { useAppSelector } from '../hooks/useAppSelector';
+import ProductCard from '../../components/products/ProductCard';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { fetchProducts } from '../../store/reducers/product.slice';
 
 const ProductsPage = () => {
   const products = useAppSelector((state) => state.products.products);

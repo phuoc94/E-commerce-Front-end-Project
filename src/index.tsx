@@ -1,4 +1,4 @@
-import './index.css';
+import './styles/index.css';
 
 import React from 'react';
 
@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 
 import reportWebVitals from './reportWebVitals';
-import router from './router';
+import router from './routes/router';
 import store from './store/configureStore';
 
 const container = document.getElementById('root')!;

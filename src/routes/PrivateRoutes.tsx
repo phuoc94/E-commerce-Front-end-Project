@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 
-import { Navigate, Outlet } from 'react-router-dom';
+import {
+  Navigate,
+  Outlet,
+} from 'react-router-dom';
 
-import { fetchRefreshToken } from '../features/auth/auth.actions';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
+import { fetchRefreshToken } from '../store/actions/auth.actions';
 import { cookies } from '../utils/cookies';
 
 const PrivateRoutes: React.FC = () => {

@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { Product } from '../product.types';
+import { Product } from '../../types/product.types';
 
 type ProductCardProps = {
   product: Product;
