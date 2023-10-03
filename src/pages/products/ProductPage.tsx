@@ -17,7 +17,7 @@ import {
 import ImageDisplay from '../../components/products/ImageDisplay';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { fetchProduct } from '../../store/reducers/product.slice';
+import { fetchProduct } from '../../store/actions/product.actions';
 
 const ProductPage = () => {
   const { productId } = useParams();

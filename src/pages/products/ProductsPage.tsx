@@ -5,7 +5,7 @@ import { Container, Grid, Paper, Typography } from '@mui/material';
 import ProductCard from '../../components/products/ProductCard';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { fetchProducts } from '../../store/reducers/product.slice';
+import { fetchProducts } from '../../store/actions/product.actions';
 
 const ProductsPage = () => {
   const products = useAppSelector((state) => state.products.products);

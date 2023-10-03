@@ -1,13 +1,16 @@
-import axios from 'axios';
-
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Product } from '../../types/product.types';
+import {
+  addProduct,
+  fetchProduct,
+  fetchProducts,
+} from '../actions/product.actions';
 
 interface ProductState {
   products: Product[];
   product: Product | null;
-  error: string | null;
+  error: string | null | undefined;
   isLoading: boolean;
 }
 
@@ -17,21 +20,6 @@ const initialState: ProductState = {
   error: null,
   isLoading: false,
 };
-
-export const fetchProducts = createAsyncThunk('fetchProducts', async () => {
-  const data = await axios.get('https://api.escuelajs.co/api/v1/products');
-  return data;
-});
-
-export const fetchProduct = createAsyncThunk(
-  'fetchProduct',
-  async (productId: string) => {
-    const data = await axios.get(
-      `https://api.escuelajs.co/api/v1/products/${productId}`,
-    );
-    return data;
-  },
-);
 
 export const productSlice = createSlice({
   name: 'product',
@@ -44,7 +32,7 @@ export const productSlice = createSlice({
       state: ProductState,
       action: PayloadAction<Product | null>,
     ) => {
-      state.product = action.payload;
+      state.product = action.payload as Product;
     },
   },
   extraReducers: (builder) => {
@@ -52,32 +40,36 @@ export const productSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      if (!(action.payload instanceof Error)) {
-        state.products = action.payload.data as Product[];
-        state.isLoading = false;
-      }
+      state.products = action.payload as Product[];
+      state.isLoading = false;
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {
-      if (action.payload instanceof Error) {
-        state.isLoading = false;
-        state.error = action.payload.message;
-      }
+      state.isLoading = false;
+      state.error = action.error.message;
     });
 
     builder.addCase(fetchProduct.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
-      if (!(action.payload instanceof Error)) {
-        state.product = action.payload.data as Product;
-        state.isLoading = false;
-      }
+      state.product = action.payload as Product;
+      state.isLoading = false;
     });
     builder.addCase(fetchProduct.rejected, (state, action) => {
-      if (action.payload instanceof Error) {
-        state.isLoading = false;
-        state.error = action.payload.message;
-      }
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(addProduct.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(addProduct.fulfilled, (state, action) => {
+      state.product = action.payload as Product;
+      state.isLoading = false;
+    });
+    builder.addCase(addProduct.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
     });
   },
 });
