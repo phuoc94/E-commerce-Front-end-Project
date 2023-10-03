@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import SearchBox from '../../components/TopNavBar/SearchBox';
+import SearchBox from '../../components/topnavbar/SearchBox';
 import AccountPopover from './AccountPopover';
 
 const NavBar = () => {
