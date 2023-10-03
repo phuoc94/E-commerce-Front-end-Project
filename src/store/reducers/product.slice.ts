@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import { Product } from '../../types/product.types';
 import {
@@ -24,17 +24,7 @@ const initialState: ProductState = {
 export const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {
-    setProducts: (state: ProductState, action: PayloadAction<Product[]>) => {
-      state.products = action.payload;
-    },
-    setCurrentProduct: (
-      state: ProductState,
-      action: PayloadAction<Product | null>,
-    ) => {
-      state.product = action.payload as Product;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
       state.isLoading = true;
@@ -74,5 +64,4 @@ export const productSlice = createSlice({
   },
 });
 
-export const { setProducts, setCurrentProduct } = productSlice.actions;
 export default productSlice.reducer;
