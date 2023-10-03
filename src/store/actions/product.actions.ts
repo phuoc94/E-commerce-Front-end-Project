@@ -24,7 +24,7 @@ export const addProduct = createAsyncThunk(
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
-  async () => {
+  async (): Promise<Product[]> => {
     const response = await axios.get(API_URL);
     return response.data;
   },
@@ -32,7 +32,7 @@ export const fetchProducts = createAsyncThunk(
 
 export const fetchProduct = createAsyncThunk(
   'products/fetchProduct',
-  async (productId: string) => {
+  async (productId: string): Promise<Product> => {
     const response = await axios.get(`${API_URL}/${productId}`);
     return response.data;
   },

@@ -30,7 +30,7 @@ export const productSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.products = action.payload as Product[];
+      state.products = action.payload;
       state.isLoading = false;
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {
@@ -42,7 +42,7 @@ export const productSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
-      state.product = action.payload as Product;
+      state.product = action.payload;
       state.isLoading = false;
     });
     builder.addCase(fetchProduct.rejected, (state, action) => {
@@ -54,7 +54,7 @@ export const productSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(addProduct.fulfilled, (state, action) => {
-      state.product = action.payload as Product;
+      state.product = action.payload;
       state.isLoading = false;
     });
     builder.addCase(addProduct.rejected, (state, action) => {
