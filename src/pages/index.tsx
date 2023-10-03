@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import ListOfCategories from '../containers/HomePage/ListOfCategories';
+import ListOfCategories from '../containers/homepage/ListOfCategories';
 
 const HomePage = () => {
   return (
