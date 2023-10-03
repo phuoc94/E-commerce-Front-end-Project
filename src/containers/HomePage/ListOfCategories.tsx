@@ -7,7 +7,7 @@ import { Container, Grid, Typography } from '@mui/material';
 import CategoryCard from '../../components/category/CategoryCard';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { fetchCategories } from '../../store/reducers/category.slice';
+import { fetchCategories } from '../../store/actions/category.actions';
 
 const ListOfCategories = () => {
   const categories = useAppSelector((state) => state.categories.categories);
