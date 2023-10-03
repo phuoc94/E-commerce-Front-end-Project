@@ -1,14 +1,12 @@
+import { fetchCategories } from '../../store/actions/category.actions';
 import store from '../../store/configureStore';
-import {
-  CategoryState,
-  fetchCategories,
-} from '../../store/reducers/category.slice';
+import { CategoryState } from '../../store/reducers/category.slice';
 import { Category } from '../../types/category.types';
 
 describe('category reducer', () => {
   let initialState: CategoryState;
   let stateAfter: CategoryState;
-  let mockProducts: Category[] = [
+  let mockCategories: Category[] = [
     {
       id: 1,
       name: 'category 1',
@@ -22,7 +20,9 @@ describe('category reducer', () => {
   ];
 
   beforeEach(async () => {
-    await store.dispatch(fetchCategories.fulfilled(mockProducts, 'fulfilled'));
+    await store.dispatch(
+      fetchCategories.fulfilled(mockCategories, 'fulfilled'),
+    );
     initialState = store.getState().categories;
   });
 
