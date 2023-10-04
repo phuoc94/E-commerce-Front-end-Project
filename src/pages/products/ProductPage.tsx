@@ -98,7 +98,7 @@ const ProductPage = () => {
               </Box>
             </Box>
             <Button variant="contained" fullWidth>
-              Add to Card
+              Add to Cart
             </Button>
           </Box>
         </Grid>

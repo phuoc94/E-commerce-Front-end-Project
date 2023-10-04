@@ -2,19 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { Product } from '../../types/product.types';
 
-type Items = Product & {
+export type Item = Product & {
   quantity: number;
 };
 
-type CardState = {
-  cartItems: Items[];
+type CartState = {
+  cartItems: Item[];
   totalItems: number;
   totalPrice: number;
   isLoading: boolean;
   error: string | undefined | null;
 };
 
-const initialState: CardState = {
+const initialState: CartState = {
   cartItems: [],
   totalItems: 0,
   totalPrice: 0,
@@ -22,11 +22,11 @@ const initialState: CardState = {
   error: null,
 };
 
-export const cardSlice = createSlice({
-  name: 'card',
+export const cartSlice = createSlice({
+  name: 'cart',
   initialState,
   reducers: {
-    addItemToCard: (state, action) => {
+    addItemToCart: (state, action) => {
       const index = state.cartItems.findIndex(
         (item) => item.id === action.payload.id,
       );
@@ -38,7 +38,7 @@ export const cardSlice = createSlice({
       state.totalItems++;
       state.totalPrice += action.payload.price;
     },
-    removeItemFromCard: (state, action) => {
+    removeItemFromCart: (state, action) => {
       const index = state.cartItems.findIndex(
         (item) => item.id === action.payload.id,
       );
@@ -51,6 +51,6 @@ export const cardSlice = createSlice({
   },
 });
 
-export const { addItemToCard, removeItemFromCard } = cardSlice.actions;
+export const { addItemToCart, removeItemFromCart } = cartSlice.actions;
 
-export default cardSlice.reducer;
+export default cartSlice.reducer;
