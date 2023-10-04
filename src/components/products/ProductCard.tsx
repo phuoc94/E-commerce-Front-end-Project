@@ -12,6 +12,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { addItemToCard } from '../../store/reducers/card.slice';
 import { Product } from '../../types/product.types';
 
 type ProductCardProps = {
@@ -19,6 +21,12 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const dispatch = useAppDispatch();
+
+  const handleAddToCard = (e: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(addItemToCard(product));
+  };
+
   return (
     <Card>
       <Link to={`/product/${product.id}`}>
@@ -40,7 +48,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <IconButton aria-label="Add to Favorites">
           <FavoriteIcon />
         </IconButton>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleAddToCard}>
           Add to Cart
         </Button>
       </CardActions>
