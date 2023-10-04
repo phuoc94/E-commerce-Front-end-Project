@@ -71,7 +71,7 @@ const ProductPage = () => {
               <Typography variant="h3">{product.price} €</Typography>
               <Box display={'flex'} gap={1}>
                 <IconButton
-                  aria-label="delete"
+                  aria-label="decrease"
                   size="large"
                   disabled={quantity === 1}
                   onClick={(e) => quantity > 1 && setQuantity(quantity - 1)}
@@ -89,7 +89,7 @@ const ProductPage = () => {
                   value={quantity}
                 />
                 <IconButton
-                  aria-label="delete"
+                  aria-label="increase"
                   size="large"
                   onClick={(e) => setQuantity(quantity + 1)}
                 >
