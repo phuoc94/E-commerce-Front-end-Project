@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Close, ShoppingCart } from '@mui/icons-material';
 import {
@@ -23,10 +23,15 @@ const CartDrawer = () => {
   );
   const [openDrawer, setOpenDrawer] = useState(false);
 
+  const navigate = useNavigate();
+
   const toggleDrawer = () => {
-    console.log('toggle');
-    console.log(openDrawer);
     setOpenDrawer(!openDrawer);
+  };
+
+  const handleCheckout = () => {
+    toggleDrawer();
+    navigate('/cart');
   };
 
   return (
@@ -68,7 +73,7 @@ const CartDrawer = () => {
               </Typography>
             </Box>
             <Stack gap={2} marginTop={2}>
-              <Button fullWidth variant="contained" component={Link} to="/cart">
+              <Button fullWidth variant="contained" onClick={handleCheckout}>
                 Checkout
               </Button>
 
