@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { Add, Remove } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,7 +12,14 @@ import {
   Typography,
 } from '@mui/material';
 
-import { Item } from '../../store/reducers/cart.slice';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import {
+  decreaseItemQuantity,
+  increaseItemQuantity,
+  Item,
+  removeItemFromCart,
+  setItemQuantity,
+} from '../../store/reducers/cart.slice';
 
 type CartItemProps = {
   item: Item;
@@ -26,6 +33,30 @@ const Img = styled('img')({
 });
 
 const CartItem = ({ item }: CartItemProps) => {
+  const [quantity, setQuantity] = useState(item.quantity);
+
+  const dispatch = useAppDispatch();
+
+  const handleIncreaseItem = (id: number) => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+    dispatch(increaseItemQuantity(id));
+  };
+
+  const handleDecreaseItem = (id: number) => {
+    setQuantity((prevQuantity) => prevQuantity - 1);
+    dispatch(decreaseItemQuantity(id));
+  };
+
+  const handleSetItemQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuantity = Number(e.target.value);
+    setQuantity(newQuantity);
+    dispatch(setItemQuantity({ id: item.id, quantity: newQuantity }));
+  };
+
+  const handleRemove = (id: number) => {
+    dispatch(removeItemFromCart({ id }));
+  };
+
   return (
     <Grid
       container
@@ -46,21 +77,31 @@ const CartItem = ({ item }: CartItemProps) => {
           <Grid item>
             <Typography>{item.price} € / pcs</Typography>
             <Box display={'flex'} gap={1}>
-              <IconButton aria-label="decrease" disabled={item.quantity === 1}>
+              <IconButton
+                aria-label="decrease"
+                disabled={item.quantity === 1}
+                onClick={(e) => handleDecreaseItem(item.id)}
+              >
                 <Remove fontSize="inherit" />
               </IconButton>
               <TextField
                 variant="outlined"
                 size="small"
+                type="number"
+                inputProps={{ min: 0 }}
                 sx={{
                   maxWidth: '70px',
                   '& input': {
                     textAlign: 'center',
                   },
                 }}
-                value={item.quantity}
+                onChange={handleSetItemQuantity}
+                value={quantity}
               />
-              <IconButton aria-label="increase">
+              <IconButton
+                aria-label="increase"
+                onClick={(e) => handleIncreaseItem(item.id)}
+              >
                 <Add fontSize="inherit" />
               </IconButton>
             </Box>
@@ -76,7 +117,10 @@ const CartItem = ({ item }: CartItemProps) => {
           sx={{ height: '100%' }}
         >
           <Grid item>
-            <IconButton aria-label="delete">
+            <IconButton
+              aria-label="delete"
+              onClick={(e) => handleRemove(item.id)}
+            >
               <DeleteIcon />
             </IconButton>
           </Grid>

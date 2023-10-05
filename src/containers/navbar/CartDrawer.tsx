@@ -58,7 +58,7 @@ const CartDrawer = () => {
           <Divider />
           <Box overflow="auto" height="500px">
             {cartItems.map((item) => (
-              <Fragment>
+              <Fragment key={item.id}>
                 <CartItem item={item} />
                 <Divider />
               </Fragment>
