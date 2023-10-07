@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -7,6 +7,8 @@ import {
   Container,
   Grid,
   IconButton,
+  Link,
+  Paper,
   Stack,
   Typography,
 } from '@mui/material';
@@ -17,7 +19,7 @@ import CartDrawer from './CartDrawer';
 
 const NavBar = () => {
   return (
-    <Box sx={{ flexGrow: 1 }} marginTop={{ xs: '135px', md: '71px' }}>
+    <Box sx={{ flexGrow: 1 }} marginTop="135px">
       <AppBar position="fixed">
         <Container>
           <Grid
@@ -49,7 +51,7 @@ const NavBar = () => {
               <Typography
                 variant="h6"
                 to="/"
-                component={Link}
+                component={RouterLink}
                 sx={{
                   mr: 2,
                   fontFamily: 'monospace',
@@ -73,6 +75,25 @@ const NavBar = () => {
             </Grid>
           </Grid>
         </Container>
+        <Paper
+          sx={{
+            display: { xs: 'none', md: 'flex' },
+            height: '63px',
+            alignItems: 'center',
+            borderRadius: '0',
+          }}
+        >
+          <Container>
+            <Stack direction="row" spacing={2}>
+              <Link to="/" component={RouterLink}>
+                Home
+              </Link>
+              <Link to="/products" component={RouterLink}>
+                Products
+              </Link>
+            </Stack>
+          </Container>
+        </Paper>
       </AppBar>
     </Box>
   );
