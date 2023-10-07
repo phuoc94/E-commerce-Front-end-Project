@@ -39,12 +39,12 @@ const CartItem = ({ item }: CartItemProps) => {
 
   const handleIncreaseItem = (id: number) => {
     setQuantity((prevQuantity) => prevQuantity + 1);
-    dispatch(increaseItemQuantity(id));
+    dispatch(increaseItemQuantity({ id }));
   };
 
   const handleDecreaseItem = (id: number) => {
     setQuantity((prevQuantity) => prevQuantity - 1);
-    dispatch(decreaseItemQuantity(id));
+    dispatch(decreaseItemQuantity({ id }));
   };
 
   const handleSetItemQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {

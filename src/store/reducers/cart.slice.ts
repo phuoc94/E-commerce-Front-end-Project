@@ -26,7 +26,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItemToCart: (state, action) => {
+    addItemToCart: (state, action: { payload: Product }) => {
       const index = state.cartItems.findIndex(
         (item) => item.id === action.payload.id,
       );
@@ -38,7 +38,7 @@ export const cartSlice = createSlice({
       state.totalItems++;
       state.totalPrice += action.payload.price;
     },
-    removeItemFromCart: (state, action) => {
+    removeItemFromCart: (state, action: { payload: { id: number } }) => {
       const index = state.cartItems.findIndex(
         (item) => item.id === action.payload.id,
       );
@@ -49,9 +49,9 @@ export const cartSlice = createSlice({
         state.cartItems.splice(index, 1);
       }
     },
-    increaseItemQuantity: (state, action) => {
+    increaseItemQuantity: (state, action: { payload: { id: number } }) => {
       const index = state.cartItems.findIndex(
-        (item) => item.id === action.payload,
+        (item) => item.id === action.payload.id,
       );
       if (index !== -1) {
         state.cartItems[index].quantity += 1;
@@ -59,9 +59,9 @@ export const cartSlice = createSlice({
         state.totalPrice += state.cartItems[index].price;
       }
     },
-    decreaseItemQuantity: (state, action) => {
+    decreaseItemQuantity: (state, action: { payload: { id: number } }) => {
       const index = state.cartItems.findIndex(
-        (item) => item.id === action.payload,
+        (item) => item.id === action.payload.id,
       );
       if (index !== -1) {
         state.cartItems[index].quantity -= 1;
@@ -69,7 +69,10 @@ export const cartSlice = createSlice({
         state.totalPrice -= state.cartItems[index].price;
       }
     },
-    setItemQuantity: (stata, action) => {
+    setItemQuantity: (
+      stata,
+      action: { payload: { id: number; quantity: number } },
+    ) => {
       const index = stata.cartItems.findIndex(
         (item) => item.id === action.payload.id,
       );

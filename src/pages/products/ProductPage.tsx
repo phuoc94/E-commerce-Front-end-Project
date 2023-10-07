@@ -36,6 +36,8 @@ const ProductPage = () => {
     }
   }, [dispatch, productId]);
 
+  const handleAddItemToCart = () => {};
+
   if (isLoading) {
     return (
       <Container>
@@ -97,7 +99,7 @@ const ProductPage = () => {
                 </IconButton>
               </Box>
             </Box>
-            <Button variant="contained" fullWidth>
+            <Button variant="contained" fullWidth onClick={handleAddItemToCart}>
               Add to Cart
             </Button>
           </Box>

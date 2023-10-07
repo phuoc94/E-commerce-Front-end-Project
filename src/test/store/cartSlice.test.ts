@@ -85,7 +85,7 @@ describe('cart reducer', () => {
       totalItems: 1,
       totalPrice: item.price,
     };
-    const nextState = cartReducer(state, increaseItemQuantity(26));
+    const nextState = cartReducer(state, increaseItemQuantity({ id: 26 }));
     expect(nextState.cartItems[0].quantity).toEqual(2);
     expect(nextState.totalItems).toEqual(2);
     expect(nextState.totalPrice).toEqual(productsData[0].price * 2);
@@ -99,7 +99,7 @@ describe('cart reducer', () => {
       totalItems: 1,
       totalPrice: item.price,
     };
-    const nextState = cartReducer(state, increaseItemQuantity(27));
+    const nextState = cartReducer(state, increaseItemQuantity({ id: 27 }));
     expect(nextState.cartItems[0].quantity).toEqual(1);
     expect(nextState.totalItems).toEqual(1);
     expect(nextState.totalPrice).toEqual(productsData[0].price);
@@ -113,7 +113,7 @@ describe('cart reducer', () => {
       totalItems: 2,
       totalPrice: item.price * 2,
     };
-    const nextState = cartReducer(state, decreaseItemQuantity(26));
+    const nextState = cartReducer(state, decreaseItemQuantity({ id: 26 }));
     expect(nextState.cartItems[0].quantity).toEqual(1);
     expect(nextState.totalItems).toEqual(1);
     expect(nextState.totalPrice).toEqual(productsData[0].price);
@@ -127,7 +127,7 @@ describe('cart reducer', () => {
       totalItems: 2,
       totalPrice: item.price * 2,
     };
-    const nextState = cartReducer(state, decreaseItemQuantity(27));
+    const nextState = cartReducer(state, decreaseItemQuantity({ id: 27 }));
     expect(nextState.cartItems[0].quantity).toEqual(2);
     expect(nextState.totalItems).toEqual(2);
     expect(nextState.totalPrice).toEqual(productsData[0].price * 2);
