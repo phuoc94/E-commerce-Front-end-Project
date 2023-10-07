@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { User } from '../../types/user.types';
+import { AUTH_API_URL } from '../../utils/constants';
 import { setCookies } from '../../utils/cookies';
 
 interface LoginCredentials {
@@ -19,13 +20,11 @@ interface ApiResponse {
   refresh_token: string;
 }
 
-const API_URL = 'https://api.escuelajs.co/api/v1/auth';
-
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials) => {
     const response: AxiosResponse<ApiResponse> = await axios.post<ApiResponse>(
-      `${API_URL}/login`,
+      `${AUTH_API_URL}/login`,
       credentials,
     );
 
@@ -45,7 +44,7 @@ export const fetchNewAccessToken = createAsyncThunk(
     };
 
     const response: AxiosResponse<ApiResponse> = await axios.post<ApiResponse>(
-      `${API_URL}/refresh-token`,
+      `${AUTH_API_URL}/refresh-token`,
       body,
     );
     const { access_token, refresh_token } = response.data;
@@ -60,7 +59,7 @@ export const getProfile = createAsyncThunk(
   'auth/getProfile',
   async (accessToken: string) => {
     const response: AxiosResponse<User> = await axios.get<User>(
-      `${API_URL}/profile`,
+      `${AUTH_API_URL}/profile`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

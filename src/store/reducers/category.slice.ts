@@ -1,16 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Category } from '../../types/category.types';
-import { fetchCategories } from '../actions/category.actions';
+import { fetchCategories, fetchCategory } from '../actions/category.actions';
 
 export interface CategoryState {
   categories: Category[];
+  category: Category | null;
   error: string | null | undefined;
   isLoading: boolean;
 }
 
 const initialState: CategoryState = {
   categories: [],
+  category: null,
   error: null,
   isLoading: false,
 };
@@ -28,6 +30,18 @@ export const categorySlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(fetchCategories.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(fetchCategory.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchCategory.fulfilled, (state, action) => {
+      state.category = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(fetchCategory.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
     });

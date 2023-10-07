@@ -1,9 +1,8 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
+import { PRODUCT_API_URL } from '../../utils/constants';
 import productsData from '../data/productsData';
-
-const PRODUCT_API_URL = 'https://api.escuelajs.co/api/v1/products';
 
 export const handlers = [
   // get all products

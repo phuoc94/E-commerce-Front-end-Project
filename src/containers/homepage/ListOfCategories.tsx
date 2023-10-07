@@ -30,7 +30,7 @@ const ListOfCategories = () => {
         {categories &&
           categories.map((category) => (
             <Grid item xs={6} sm={4} md={3} key={category.id}>
-              <Link to={`category/${category.name}`}>
+              <Link to={`category/${category.id}`}>
                 <CategoryCard title={category.name} image={category.image} />
               </Link>
             </Grid>

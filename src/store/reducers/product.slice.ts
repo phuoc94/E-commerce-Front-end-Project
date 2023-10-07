@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Product } from '../../types/product.types';
 import {
   addProduct,
+  fetchCategoryProducts,
   fetchProduct,
   fetchProducts,
 } from '../actions/product.actions';
@@ -61,6 +62,19 @@ export const productSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message;
     });
+
+    builder
+      .addCase(fetchCategoryProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchCategoryProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchCategoryProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      });
   },
 });
 
