@@ -6,7 +6,7 @@ export type Item = Product & {
   quantity: number;
 };
 
-type CartState = {
+export type CartState = {
   cartItems: Item[];
   totalItems: number;
   totalPrice: number;
