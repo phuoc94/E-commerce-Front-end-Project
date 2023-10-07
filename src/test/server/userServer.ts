@@ -7,6 +7,7 @@ export const access_token = 'my-access-token';
 export const refresh_token = 'my-refresh-token';
 
 export const handlers = [
+  // login
   rest.post(
     'https://api.escuelajs.co/api/v1/auth/login',
     async (req, res, ctx) => {
@@ -27,6 +28,8 @@ export const handlers = [
       }
     },
   ),
+
+  // get new access token
   rest.post(
     'https://api.escuelajs.co/api/v1/auth/refresh-token',
     async (req, res, ctx) => {
@@ -46,6 +49,8 @@ export const handlers = [
       }
     },
   ),
+
+  // get profile
   rest.get(
     'https://api.escuelajs.co/api/v1/auth/profile',
     async (req, res, ctx) => {
