@@ -1,34 +1,24 @@
 import { fetchCategories } from '../../store/actions/category.actions';
-import store from '../../store/configureStore';
-import { CategoryState } from '../../store/reducers/category.slice';
-import { Category } from '../../types/category.types';
+import { createStore } from '../../store/configureStore';
+import categoryData from '../data/categoryDate';
+import server from '../server/categoryServer';
 
-describe('category reducer', () => {
-  let initialState: CategoryState;
-  let stateAfter: CategoryState;
-  let mockCategories: Category[] = [
-    {
-      id: 1,
-      name: 'category 1',
-      image: 'image 1',
-    },
-    {
-      id: 2,
-      name: 'category 2',
-      image: 'image 2',
-    },
-  ];
+let store = createStore();
 
-  beforeEach(async () => {
-    await store.dispatch(
-      fetchCategories.fulfilled(mockCategories, 'fulfilled'),
-    );
-    initialState = store.getState().categories;
-  });
+beforeEach(() => {
+  store = createStore();
+});
 
-  test('should have the initial state', () => {
-    stateAfter = store.getState().categories;
-    expect(initialState).toBe(stateAfter);
-    expect(initialState.categories.length).toBeGreaterThanOrEqual(2);
+beforeAll(() => server.listen());
+
+afterEach(() => server.resetHandlers());
+
+afterAll(() => server.close());
+
+describe('Test categorytReducer async actions', () => {
+  test('should fetch all categories', async () => {
+    await store.dispatch(fetchCategories());
+    const state = store.getState();
+    expect(state.categories.categories).toMatchObject(categoryData);
   });
 });
