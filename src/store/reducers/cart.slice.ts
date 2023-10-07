@@ -26,17 +26,20 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItemToCart: (state, action: { payload: Product }) => {
-      const index = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id,
-      );
+    addItemToCart: (
+      state,
+      action: { payload: { product: Product; quantity?: number } },
+    ) => {
+      const { product, quantity } = action.payload;
+      const index = state.cartItems.findIndex((item) => item.id === product.id);
+      const newQuantity = quantity ? quantity : 1;
       if (index !== -1) {
-        state.cartItems[index].quantity += 1;
+        state.cartItems[index].quantity += newQuantity;
       } else {
-        state.cartItems.push({ ...action.payload, quantity: 1 });
+        state.cartItems.push({ ...product, quantity: newQuantity });
       }
-      state.totalItems++;
-      state.totalPrice += action.payload.price;
+      state.totalItems += newQuantity;
+      state.totalPrice += product.price * newQuantity;
     },
     removeItemFromCart: (state, action: { payload: { id: number } }) => {
       const index = state.cartItems.findIndex(
@@ -70,20 +73,19 @@ export const cartSlice = createSlice({
       }
     },
     setItemQuantity: (
-      stata,
+      state,
       action: { payload: { id: number; quantity: number } },
     ) => {
-      const index = stata.cartItems.findIndex(
-        (item) => item.id === action.payload.id,
-      );
-      if (index !== -1) {
-        stata.totalItems -= stata.cartItems[index].quantity;
-        stata.totalPrice -=
-          stata.cartItems[index].quantity * stata.cartItems[index].price;
-        stata.cartItems[index].quantity = action.payload.quantity;
-        stata.totalItems += stata.cartItems[index].quantity;
-        stata.totalPrice +=
-          stata.cartItems[index].quantity * stata.cartItems[index].price;
+      const { id, quantity } = action.payload;
+      const itemIndex = state.cartItems.findIndex((item) => item.id === id);
+
+      if (itemIndex !== -1) {
+        const item = state.cartItems[itemIndex];
+        const quantityDifference = quantity - item.quantity;
+
+        item.quantity = quantity;
+        state.totalItems += quantityDifference;
+        state.totalPrice += quantityDifference * item.price;
       }
     },
   },

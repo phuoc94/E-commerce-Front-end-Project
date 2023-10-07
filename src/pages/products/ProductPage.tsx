@@ -18,6 +18,10 @@ import ImageDisplay from '../../components/products/ImageDisplay';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { fetchProduct } from '../../store/actions/product.actions';
+import {
+  addItemToCart,
+  setItemQuantity,
+} from '../../store/reducers/cart.slice';
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -25,6 +29,8 @@ const ProductPage = () => {
   const { product, isLoading, error } = useAppSelector(
     (state) => state.products,
   );
+
+  const { cartItems } = useAppSelector((state) => state.cart);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -36,7 +42,21 @@ const ProductPage = () => {
     }
   }, [dispatch, productId]);
 
-  const handleAddItemToCart = () => {};
+  const handleAddItemToCart = () => {
+    const item = cartItems.find((item) => item.id === product?.id);
+    if (item) {
+      dispatch(
+        setItemQuantity({
+          id: Number(productId),
+          quantity: item.quantity + quantity,
+        }),
+      );
+    } else {
+      if (product) {
+        dispatch(addItemToCart({ product, quantity }));
+      }
+    }
+  };
 
   if (isLoading) {
     return (

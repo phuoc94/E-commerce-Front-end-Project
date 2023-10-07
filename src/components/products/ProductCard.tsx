@@ -24,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useAppDispatch();
 
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(addItemToCart(product));
+    dispatch(addItemToCart({ product }));
   };
 
   return (

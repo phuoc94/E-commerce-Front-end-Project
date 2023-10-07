@@ -24,7 +24,7 @@ describe('cart reducer', () => {
 
   test('should handle addItemToCart', () => {
     const product = productsData[0];
-    const nextState = cartReducer(initialState, addItemToCart(product));
+    const nextState = cartReducer(initialState, addItemToCart({ product }));
     expect(nextState.cartItems).toHaveLength(1);
     expect(nextState.cartItems[0]).toEqual({ ...product, quantity: 1 });
     expect(nextState.totalItems).toEqual(1);
@@ -40,7 +40,7 @@ describe('cart reducer', () => {
       totalItems: 1,
       totalPrice: item.price,
     };
-    const nextState = cartReducer(state, addItemToCart(product));
+    const nextState = cartReducer(state, addItemToCart({ product }));
     expect(nextState.cartItems).toHaveLength(1);
     expect(nextState.cartItems[0]).toEqual({ ...product, quantity: 2 });
     expect(nextState.totalItems).toEqual(2);
