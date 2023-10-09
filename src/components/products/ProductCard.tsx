@@ -29,7 +29,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <Card>
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/products/${product.id}`}>
         <CardActionArea>
           <CardMedia
             component="img"
