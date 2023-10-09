@@ -39,7 +39,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
             title={product.title}
           />
           <CardContent>
-            <Typography variant="body2">{product.title}</Typography>
+            <Typography variant="body1">{product.title}</Typography>
+            <Typography variant="caption">
+              {product.description.length > 40
+                ? `${product.description.slice(0, 40)}...`
+                : product.description}
+            </Typography>
             <Typography variant="h6">{product.price} €</Typography>
           </CardContent>
         </CardActionArea>
