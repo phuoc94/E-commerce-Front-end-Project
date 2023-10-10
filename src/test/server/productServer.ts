@@ -5,9 +5,26 @@ import { PRODUCT_API_URL } from '../../utils/constants';
 import productsData from '../data/productsData';
 
 export const handlers = [
-  // get all products
+  // get all products and filters
   rest.get(PRODUCT_API_URL, async (req, res, ctx) => {
-    return res(ctx.json(productsData));
+    const queryParams = req.url.searchParams;
+    const priceMin = Number(queryParams.get('price_min'));
+    const priceMax = Number(queryParams.get('price_max'));
+    const categoryId = Number(queryParams.get('categoryId'));
+    let expectedProducts = productsData;
+    if (priceMin) {
+      expectedProducts = expectedProducts.filter((p) => p.price > priceMin);
+    }
+    if (priceMax) {
+      expectedProducts = expectedProducts.filter((p) => p.price < priceMax);
+    }
+    if (categoryId) {
+      expectedProducts = expectedProducts.filter(
+        (p) => p.category.id === categoryId,
+      );
+    }
+
+    return res(ctx.json(expectedProducts));
   }),
 
   // get single product

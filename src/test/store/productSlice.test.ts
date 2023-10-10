@@ -26,6 +26,73 @@ describe('Test productReducer async actions', () => {
     expect(state.products.products).toMatchObject(productsData);
   });
 
+  test('should filter products min_price', async () => {
+    const filters = { price_min: 100 };
+
+    await store.dispatch(fetchProducts(filters));
+    const expectedProducts = productsData.filter(
+      (p) => p.price > filters.price_min,
+    );
+    const state = store.getState();
+    expect(state.products.products).toMatchObject(expectedProducts);
+  });
+
+  test('should filter products max_price', async () => {
+    const filters = { price_max: 100 };
+
+    await store.dispatch(fetchProducts(filters));
+    const expectedProducts = productsData.filter(
+      (p) => p.price < filters.price_max,
+    );
+    const state = store.getState();
+    expect(state.products.products).toMatchObject(expectedProducts);
+  });
+
+  test('should filter products categoryId', async () => {
+    const filters = {
+      categoryId: 3,
+    };
+
+    await store.dispatch(fetchProducts(filters));
+    const expectedProducts = productsData.filter(
+      (p) => p.category.id === filters.categoryId,
+    );
+    const state = store.getState();
+    expect(state.products.products).toMatchObject(expectedProducts);
+  });
+
+  test('should filter products min_price and price_max', async () => {
+    const filters = {
+      price_min: 100,
+      price_max: 800,
+    };
+
+    await store.dispatch(fetchProducts(filters));
+    const expectedProducts = productsData.filter(
+      (p) => p.price > filters.price_min && p.price < filters.price_max,
+    );
+    const state = store.getState();
+    expect(state.products.products).toMatchObject(expectedProducts);
+  });
+
+  test('should filter products price_min, price_max and categoryId', async () => {
+    const filters = {
+      price_min: 100,
+      price_max: 800,
+      categoryId: 3,
+    };
+
+    await store.dispatch(fetchProducts(filters));
+    const expectedProducts = productsData.filter(
+      (p) =>
+        p.price > filters.price_min &&
+        p.price < filters.price_max &&
+        p.category.id === filters.categoryId,
+    );
+    const state = store.getState();
+    expect(state.products.products).toMatchObject(expectedProducts);
+  });
+
   test('should fetch single product by id', async () => {
     await store.dispatch(fetchProduct('26'));
     const state = store.getState();
