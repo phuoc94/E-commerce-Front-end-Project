@@ -28,7 +28,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <Card>
+    <Card sx={{ height: '100%' }}>
       <Link to={`/products/${product.id}`}>
         <CardActionArea>
           <CardMedia

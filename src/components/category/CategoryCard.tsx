@@ -32,7 +32,7 @@ const CategoryCard = ({ image, title }: CategoryCardProps): JSX.Element => {
   }, [image]);
 
   return (
-    <Card>
+    <Card sx={{ height: '100%' }}>
       <CardActionArea>
         <CardMedia component="img" src={imgSrc} alt={title} />
         <CardContent>
