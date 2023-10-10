@@ -30,11 +30,18 @@ export interface ProductFilter {
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async (filters?: ProductFilter): Promise<Product[]> => {
-    if (filters) {
-      const response = await axios.get(PRODUCT_API_URL, { params: filters });
-      return response.data;
+    if (!filters) {
+      filters = {};
     }
-    const response = await axios.get(PRODUCT_API_URL);
+
+    if (filters.price_min === undefined) {
+      filters.price_min = 1;
+    }
+    if (filters.price_max === undefined) {
+      filters.price_max = 9999999999;
+    }
+
+    const response = await axios.get(PRODUCT_API_URL, { params: filters });
     return response.data;
   },
 );

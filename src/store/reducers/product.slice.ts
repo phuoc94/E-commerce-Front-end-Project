@@ -8,9 +8,12 @@ import {
   fetchProducts,
 } from '../actions/product.actions';
 
+type SortBy = 'newest' | 'priceLow' | 'priceHigh' | 'nameAZ' | 'nameZA';
+
 interface ProductState {
   products: Product[];
   product: Product | null;
+  sortBy: SortBy;
   error: string | null | undefined;
   isLoading: boolean;
 }
@@ -18,6 +21,7 @@ interface ProductState {
 const initialState: ProductState = {
   products: [],
   product: null,
+  sortBy: 'newest',
   error: null,
   isLoading: false,
 };
@@ -25,13 +29,64 @@ const initialState: ProductState = {
 export const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    sortByPriceLowToHigh: (state) => {
+      state.products.sort((a, b) => a.price - b.price);
+    },
+    sortByPriceHighToLow: (state) => {
+      state.products.sort((a, b) => b.price - a.price);
+    },
+    sortByNewest: (state) => {
+      state.products.sort((a, b) => {
+        const aDate = new Date(a.creationAt);
+        const bDate = new Date(b.creationAt);
+        return bDate.getTime() - aDate.getTime();
+      });
+    },
+    sortByNameAZ: (state) => {
+      state.products.sort((a, b) => b.title.localeCompare(a.title));
+    },
+    sortByNameZA: (state) => {
+      state.products.sort((a, b) => a.title.localeCompare(b.title));
+    },
+    setSortBy: (state, action) => {
+      state.sortBy = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.products = action.payload;
+      switch (state.sortBy) {
+        case 'priceLow':
+          state.products.sort((a, b) => a.price - b.price);
+          break;
+        case 'priceHigh':
+          state.products.sort((a, b) => b.price - a.price);
+          break;
+        case 'newest':
+          state.products.sort((a, b) => {
+            const aDate = new Date(a.creationAt);
+            const bDate = new Date(b.creationAt);
+            return bDate.getTime() - aDate.getTime();
+          });
+          break;
+        case 'nameAZ':
+          state.products.sort((a, b) => b.title.localeCompare(a.title));
+          break;
+        case 'nameZA':
+          state.products.sort((a, b) => a.title.localeCompare(b.title));
+          break;
+        default:
+          state.products.sort((a, b) => {
+            const aDate = new Date(a.creationAt);
+            const bDate = new Date(b.creationAt);
+            return bDate.getTime() - aDate.getTime();
+          });
+      }
+
       state.isLoading = false;
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {
@@ -77,5 +132,14 @@ export const productSlice = createSlice({
       });
   },
 });
+
+export const {
+  sortByNameAZ,
+  sortByNameZA,
+  sortByNewest,
+  sortByPriceHighToLow,
+  sortByPriceLowToHigh,
+  setSortBy,
+} = productSlice.actions;
 
 export default productSlice.reducer;

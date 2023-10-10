@@ -7,4 +7,5 @@ export interface Product {
   description: string;
   category: Category;
   images: string[];
+  creationAt: string;
 }
