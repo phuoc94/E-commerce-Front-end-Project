@@ -21,9 +21,19 @@ export const addProduct = createAsyncThunk(
   },
 );
 
+export interface ProductFilter {
+  categoryId?: number;
+  price_min?: number;
+  price_max?: number;
+}
+
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
-  async (): Promise<Product[]> => {
+  async (filters?: ProductFilter): Promise<Product[]> => {
+    if (filters) {
+      const response = await axios.get(PRODUCT_API_URL, { params: filters });
+      return response.data;
+    }
     const response = await axios.get(PRODUCT_API_URL);
     return response.data;
   },
