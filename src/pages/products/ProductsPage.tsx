@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   CircularProgress,
   Container,
   FormControl,
@@ -14,16 +10,14 @@ import {
   Select,
   SelectChangeEvent,
   TablePagination,
-  TextField,
   Typography,
 } from '@mui/material';
 
 import ProductCard from '../../components/products/ProductCard';
+import Filters from '../../containers/products/Filters';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import useDebounce from '../../hooks/useDebounce';
 import { fetchCategories } from '../../store/actions/category.actions';
-import { fetchProducts } from '../../store/actions/product.actions';
 import {
   setSortBy,
   sortByNameAZ,
@@ -36,8 +30,6 @@ import {
 const ProductsPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(12);
-  const [filters, setFilters] = useState({});
-  const debouncedFilter = useDebounce(filters, 500);
 
   const { products, isLoading, sortBy } = useAppSelector(
     (state) => state.products,
@@ -46,22 +38,10 @@ const ProductsPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts(debouncedFilter));
-  }, [dispatch, debouncedFilter]);
-
-  useEffect(() => {
     if (categories.length < 1) {
       dispatch(fetchCategories());
     }
   }, [dispatch, categories]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      [name]: value,
-    });
-  };
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -70,24 +50,10 @@ const ProductsPage = () => {
     setPage(newPage);
   };
 
-  const handleChangeCategory = (event: SelectChangeEvent) => {
-    if (event.target.value !== 'all') {
-      setFilters({
-        ...filters,
-        categoryId: event.target.value,
-      });
-    } else {
-      setFilters({
-        ...filters,
-        categoryId: null,
-      });
-    }
-  };
-
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 12));
     setPage(0);
   };
 
@@ -129,72 +95,7 @@ const ProductsPage = () => {
         Products
       </Typography>
       <Grid container spacing={2}>
-        <Grid item md={3} sx={{ display: { xs: 'none', md: 'block' } }}>
-          <Typography variant="h5" sx={{ paddingX: 2 }}>
-            Filters
-          </Typography>
-          <Accordion defaultExpanded>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="category-filter"
-              id="category-filter"
-            >
-              <Typography>Category</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <FormControl fullWidth margin="normal">
-                <InputLabel id="category">Category</InputLabel>
-                <Select
-                  labelId="category"
-                  id="category"
-                  label="Category"
-                  name="categoryId"
-                  onChange={handleChangeCategory}
-                >
-                  <MenuItem value="all" key="all">
-                    All
-                  </MenuItem>
-                  {categories.length > 0 &&
-                    categories.map((category) => (
-                      <MenuItem value={category.id} key={category.id}>
-                        {category.name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion defaultExpanded>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="price-filter"
-              id="price-filter"
-            >
-              <Typography>Price</Typography>
-            </AccordionSummary>
-            <AccordionDetails
-              sx={{ display: 'flex', justifyContent: 'space-between' }}
-            >
-              <TextField
-                id="price_min"
-                label="Min Price"
-                variant="standard"
-                sx={{ maxWidth: '80px' }}
-                name="price_min"
-                onChange={handleChange}
-              />
-              <Typography variant="h3">-</Typography>
-              <TextField
-                id="price_max"
-                label="Max Price"
-                variant="standard"
-                name="price_max"
-                sx={{ maxWidth: '80px' }}
-                onChange={handleChange}
-              />
-            </AccordionDetails>
-          </Accordion>
-        </Grid>
+        <Filters />
         <Grid item md={9}>
           <Grid container sx={{ marginBottom: 2 }}>
             <Grid item xs={6}>
