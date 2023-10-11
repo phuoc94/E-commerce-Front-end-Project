@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -21,6 +24,23 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const [imgSrc, setImgSrc] = useState(
+    `https://docketevents.com/assets/images/image_placeholder.jpg`,
+  );
+
+  useEffect(() => {
+    const checkImageLoaded = async () => {
+      for (const image of product.images) {
+        try {
+          await axios.get(image);
+          setImgSrc(image);
+          break;
+        } catch (error) {}
+      }
+    };
+    checkImageLoaded();
+  }, [product]);
+
   const dispatch = useAppDispatch();
 
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -35,7 +55,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             component="img"
             alt={product.title}
             height="140"
-            image={product.images[0]}
+            image={imgSrc}
             title={product.title}
           />
           <CardContent>
