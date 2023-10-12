@@ -167,12 +167,11 @@ The project uses Jest as the testing framework.
 #### How to Run Tests
 
 To run tests, use the following command:
-
+```bash
 `npm test`
-
 or
-
 `yarn test`
+```
 
 Describe the structure of your tests (unit, integration, end-to-end) and any other relevant testing details.
 
