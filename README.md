@@ -1,53 +1,183 @@
-# Front-end Project
+# E-commerce Front-end Project
 
 ![React](https://img.shields.io/badge/React-v.18-blue)
 ![Redux toolkit](https://img.shields.io/badge/RTK-v.1-purple)
 ![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green)
-![SASS](https://img.shields.io/badge/SASS-v.1-hotpink)
 
-This project requires implementation of TypeScript and SASS.
+## Table of Contents
 
-## Requirement
+1. [Introduction](#introduction)
+2. [Getting Started](#getting-started)
+3. [Usage](#usage)
+4. [Architecture & Design](#architecture--design)
+5. [Testing](#testing)
+6. [Deployment](#deployment)
 
-1. Use the API endpoint [https://fakeapi.platzi.com/](https://fakeapi.platzi.com/) to create an e-commerce website. Read the documentation and learn how to use the different endpoints.
-2. Create at lease 4 pages (can be more if you want): Page for all products, product page,
-   profile page (only available if user logins), and cart page (cart page could be a page or a modal)
-3. Create Redux store for following features:
-   - product reducer: get all products, find a single products, filter products by
-     categories, sort products by price. Create, update and delete a product (enable update & delete features only for admin of the webapp)
-   - user reducer: register and login
-   - cart reducer: add product to cart, remove products, update products's quantity in cart
-4. When adding routers to your application, programatically set certain routes to be private. For example, route to user profile page should not be accessible if user has not logged in.
-5. Implement unit testing for the reducers
-6. Deploy the application and rewrite README file.
+---
 
-## Bonus
+### 1. Introduction
 
-1. Use context API to switch theme
-2. Use pagination when fetching/displaying all the products
-3. Implement performance optimization where applicable
+This E-commerce front-end project is a web application developed using React.js, Material-UI, Redux Toolkit, and TypeScript. It provides a user-friendly interface for shopping online, allowing customers to browse, search for products, add items to their cart, and complete their purchase. The project is designed for both desktop and mobile users, providing a seamless shopping experience.
 
-## Instruction to start the project
+#### Target Audience
 
-In the project directory, you can run:
+- Online shoppers looking for a modern, responsive, and feature-rich E-commerce platform.
+- Developers interested in exploring the integration of popular technologies like React, Redux, and Material-UI in a real-world application.
 
-### `npm install`
+#### Live Project
 
-Install all the dependencies
+You can explore the live project by visiting the following link:
+[Live E-commerce Project](https://fs16-6-frontend-project.vercel.app/)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 2. Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Prerequisites
 
-### `npm test`
+Before you begin, ensure you have the following software and tools installed:
 
-Launches the test runner in the interactive watch mode
+- Node.js
+- npm (Node Package Manager) or yarn
+- Git
 
-### `npm run build`
+#### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/phuoc94/E-commerce-Front-end-Project.git
+```
+
+Installation Steps
+Install project dependencies using npm or yarn:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+This command will install all the required packages listed in the package.json file.
+
+### 3. Usage
+
+#### Scripts
+
+The project includes several scripts defined in the `package.json` file:
+
+- `start`: Starts the development server.
+- `build`: Builds the production version of the project.
+- `test`: Runs tests.
+
+To start the development server, use the following command:
+
+```bash
+`npm start`
+# or
+`yarn start`
+```
+
+#### Features
+
+- Browse, search and filter for products.
+- Add items to your cart.
+- Admin can add Product
+- User can login with email address & password
+
+---
+
+### 4. Architecture & Design
+
+#### Folder Structure
+
+The project is organized into directories for better code organization. Here's a brief overview of the key directories:
+
+```
+src/
+├── components: Holds React components.
+├── containers: Contains higher-level components or containers.
+├── hooks: Stores custom React hooks.
+├── layouts: Contains layout components defining page structure.
+├── pages: Houses the main pages or views.
+├── routes: May include route configuration and routing code.
+├── store: Contains state management related code.
+├── styles: Stores stylesheets or styles-related code.
+├── test: Holds unit tests, integration tests, or test utilities.
+├── types: Contains TypeScript type definitions and interfaces.
+└── utils: Stores utility functions or modules.
+```
+
+#### Data Flow
+
+Data in the application is managed using Redux Toolkit, which provides a predictable state container. The data flows in a unidirectional manner, making it easy to maintain and update.
+
+1. **Component Dispatch (User Interaction)**
+
+   - A component dispatches the `fetchCategories()` action. This action is created using `createAsyncThunk`, a Redux Toolkit utility that simplifies the process of handling asynchronous data fetching.
+
+2. **`fetchCategories` - CreateAsyncThunk**
+
+   - Inside `createAsyncThunk`, we initiate the API request to fetch the product categories. This action encapsulates the asynchronous API call.
+
+3. **API Request and Response**
+
+   - The `fetchCategories` action sends a request to the Platzi Fake Store API (https://fakeapi.platzi.com/). The API responds with the product categories data.
+
+4. **Category Reducers - ExtraReducers**
+
+   - In the Redux store, the category reducers define how the fetched data is processed and stored. The `extraReducers` section of the `createSlice` or `createAsyncThunk` builder is used to handle different action outcomes.
+
+   - Specifically, we use `builder.addCase(fetchCategories.fulfilled)` to specify the logic that should run when the `fetchCategories` action is fulfilled successfully. In this case, the fetched category data is stored in the Redux store, making it available for components to use.
+
+5. **Store Reducers**
+
+   - Within the store reducers, the data is updated in response to dispatched actions. The `fetchCategories.fulfilled` action's payload, which contains the category data fetched from the API, is used to update the store state.
+
+This data flow ensures that the product category information is efficiently fetched from the API, processed, and stored in the Redux store, making it accessible for various components in the application. This organized data flow contributes to a seamless and responsive user experience.
+
+#### Component Structure
+
+In this project, the component structure follows a route-based organization, where each route corresponds to a specific URL path. Here's a breakdown of the component structure:
+
+##### Routes
+
+- The project starts by routing requests to their respective paths. For example, when a user accesses domain.com/products, the route system directs the request to the appropriate page component.
+
+##### Page Components
+
+- Each route typically has an associated page component responsible for rendering the main content of that route. For example, pages/productspage.tsx is a page component that represents the /products route.
+
+###### Containers
+
+- Within the page components, you may find container components. These containers act as intermediary components that connect the page component to various data sources, including Redux for state management. They facilitate the passing of data and actions between the page component and other components.
+
+##### Individual Components
+
+- Inside the container components, you'll find individual components that make up the user interface. These components are designed to be reusable and modular. They can include components like product cards, cart displays, and checkout forms.
+
+This structured approach ensures that the project's codebase remains organized and maintainable, allowing for the separation of concerns and facilitating code reusability. It also makes it easier to understand the relationship between different parts of the application and helps in the efficient development and testing of each component.
+
+### 5. Testing
+
+#### Testing Framework
+
+The project uses Jest as the testing framework.
+
+#### How to Run Tests
+
+To run tests, use the following command:
+
+`npm test`
+
+or
+
+`yarn test`
+
+Describe the structure of your tests (unit, integration, end-to-end) and any other relevant testing details.
+
+---
+
+### 6. Deployment
+
+The project is deployed on Vercel.
