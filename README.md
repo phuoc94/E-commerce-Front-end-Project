@@ -6,7 +6,7 @@
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
+1. [Introduction](#1-introduction)
 2. [Getting Started](#getting-started)
 3. [Usage](#usage)
 4. [Architecture & Design](#architecture--design)
