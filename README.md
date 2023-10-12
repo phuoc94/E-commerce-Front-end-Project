@@ -7,11 +7,11 @@
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
-2. [Getting Started](#getting-started)
-3. [Usage](#usage)
-4. [Architecture & Design](#architecture--design)
-5. [Testing](#testing)
-6. [Deployment](#deployment)
+2. [Getting Started](#2-getting-started)
+3. [Usage](#3-usage)
+4. [Architecture & Design](#4-architecture--design)
+5. [Testing](#5-testing)
+6. [Deployment](#6-deployment)
 
 ---
 
