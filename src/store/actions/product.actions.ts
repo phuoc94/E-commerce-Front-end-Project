@@ -13,6 +13,12 @@ export interface AddProductRequest {
   images: string[];
 }
 
+export interface ProductFilter {
+  categoryId?: number;
+  price_min?: number;
+  price_max?: number;
+}
+
 export const addProduct = createAsyncThunk(
   'products/addProduct',
   async (product: AddProductRequest): Promise<Product> => {
@@ -21,11 +27,19 @@ export const addProduct = createAsyncThunk(
   },
 );
 
-export interface ProductFilter {
-  categoryId?: number;
-  price_min?: number;
-  price_max?: number;
-}
+export const updateProduct = createAsyncThunk(
+  'products/updateProduct',
+  async ({
+    product,
+    id,
+  }: {
+    product: AddProductRequest;
+    id: number;
+  }): Promise<Product> => {
+    const response = await axios.put(`${PRODUCT_API_URL}/${id}`, product);
+    return response.data;
+  },
+);
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',

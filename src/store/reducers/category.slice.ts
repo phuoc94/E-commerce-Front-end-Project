@@ -26,7 +26,18 @@ export const categorySlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchCategories.fulfilled, (state, action) => {
-      state.categories = action.payload;
+      const newCategories: Category[] = [];
+
+      action.payload.forEach((category) => {
+        if (
+          !newCategories.find((newCategory) => newCategory.id === category.id)
+        ) {
+          newCategories.push(category);
+        }
+      });
+
+      state.categories = newCategories;
+
       state.isLoading = false;
     });
     builder.addCase(fetchCategories.rejected, (state, action) => {

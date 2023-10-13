@@ -7,6 +7,7 @@ import {
   fetchCategoryProducts,
   fetchProduct,
   fetchProducts,
+  updateProduct,
 } from '../actions/product.actions';
 
 type SortBy = 'newest' | 'priceLow' | 'priceHigh' | 'nameAZ' | 'nameZA';
@@ -141,6 +142,22 @@ export const productSlice = createSlice({
         state.products = state.products.filter((p) => p.id !== action.payload);
       })
       .addCase(deleteProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(updateProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const index = state.products.findIndex(
+          (p) => p.id === action.payload.id,
+        );
+        state.products[index] = action.payload;
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
