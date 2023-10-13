@@ -76,10 +76,10 @@ export const productSlice = createSlice({
           });
           break;
         case 'nameAZ':
-          state.products.sort((a, b) => b.title.localeCompare(a.title));
+          state.products.sort((a, b) => a.title.localeCompare(b.title));
           break;
         case 'nameZA':
-          state.products.sort((a, b) => a.title.localeCompare(b.title));
+          state.products.sort((a, b) => b.title.localeCompare(a.title));
           break;
         default:
           state.products.sort((a, b) => {
