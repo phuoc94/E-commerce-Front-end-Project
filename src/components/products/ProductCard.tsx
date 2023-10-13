@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { Delete, Edit } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   Button,
@@ -16,6 +17,8 @@ import {
 } from '@mui/material';
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { deleteProduct } from '../../store/actions/product.actions';
 import { addItemToCart } from '../../store/reducers/cart.slice';
 import { Product } from '../../types/product.types';
 
@@ -27,6 +30,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [imgSrc, setImgSrc] = useState(
     `https://docketevents.com/assets/images/image_placeholder.jpg`,
   );
+
+  const { profile } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const checkImageLoaded = async () => {
@@ -45,6 +50,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(addItemToCart({ product }));
+  };
+
+  const handleDeleteProduct = (id: number) => {
+    dispatch(deleteProduct(id));
   };
 
   return (
@@ -73,6 +82,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <IconButton aria-label="Add to Favorites">
           <FavoriteIcon />
         </IconButton>
+        {profile?.role === 'admin' && (
+          <Fragment>
+            <IconButton
+              aria-label="Delete"
+              onClick={(e) => handleDeleteProduct(product.id)}
+            >
+              <Delete />
+            </IconButton>
+            <IconButton aria-label="Edit">
+              <Edit />
+            </IconButton>
+          </Fragment>
+        )}
         <Button size="small" color="primary" onClick={handleAddToCart}>
           Add to Cart
         </Button>

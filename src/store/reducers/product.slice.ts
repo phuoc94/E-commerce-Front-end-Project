@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Product } from '../../types/product.types';
 import {
   addProduct,
+  deleteProduct,
   fetchCategoryProducts,
   fetchProduct,
   fetchProducts,
@@ -127,6 +128,19 @@ export const productSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(fetchCategoryProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(deleteProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.products = state.products.filter((p) => p.id !== action.payload);
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

@@ -61,3 +61,15 @@ export const fetchCategoryProducts = createAsyncThunk(
     return response.data;
   },
 );
+
+export const deleteProduct = createAsyncThunk(
+  'products/deleteProduct',
+  async (id: number) => {
+    try {
+      await axios.delete(`${PRODUCT_API_URL}/${id}`);
+      return id;
+    } catch (error) {
+      throw error;
+    }
+  },
+);
