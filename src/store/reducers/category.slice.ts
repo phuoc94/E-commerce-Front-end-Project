@@ -30,7 +30,9 @@ export const categorySlice = createSlice({
 
       action.payload.forEach((category) => {
         if (
-          !newCategories.find((newCategory) => newCategory.id === category.id)
+          !newCategories.find(
+            (newCategory) => newCategory.name === category.name,
+          )
         ) {
           newCategories.push(category);
         }
